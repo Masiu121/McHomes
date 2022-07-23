@@ -1,0 +1,22 @@
+name: McHomes
+version: 1.0
+main: com.oxology.mchomes.McHomes
+api-version: 1.19
+author: Oxology
+description: Simple homes plugin
+
+commands:
+  home:
+    description: Base command for plugin
+    usage: "/home <set|teleport|remove> <name>"
+
+permissions:
+  mchomes.home.set:
+    description: Allows to set home
+    default: op
+  mchomes.home.teleport:
+    description: Allows to teleport to the home
+    default: op
+  mchomes.home.remove:
+    description: Allows to remove homes
+    default: op

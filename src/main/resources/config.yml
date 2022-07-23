@@ -1,0 +1,14 @@
+homes-limit: 3
+
+enable-prefix: true
+prefix: "&8[&eMc&6Homes&8]: "
+
+enable-messages: true
+no-home-name-msg: "&4You have to specify home name!"
+home-exists-msg: "&4Home already exists!"
+home-set-msg: "&aHome successfully set!"
+home-not-exists-msg: "&4Home does not exists!"
+teleporting-msg: "&bTeleporting..."
+home-removed-msg: "&aHome successfully removed!"
+no-permission-msg: "&4You don't have permissions to use this command!"
+max-homes-msg: "&4Max amount of homes reached!"
