@@ -1,5 +1,12 @@
+#----General----
+#If you don't want to deal with permissions, change this to false
+enable-permissions: true
+
+#Maximum amount of homes per player.
+#If player has mchomes.home.unlimited permission, then he can create unlimited amount of homes
 homes-limit: 3
 
+#----Messages----
 enable-prefix: true
 prefix: "&8[&eMc&6Homes&8]: "
 
@@ -12,3 +19,13 @@ teleporting-msg: "&bTeleporting..."
 home-removed-msg: "&aHome successfully removed!"
 no-permission-msg: "&4You don't have permissions to use this command!"
 max-homes-msg: "&4Max amount of homes reached!"
+no-homes-msg: "&4You don't have any homes!"
+no-player-name-msg: "&4You have to specify player name!"
+player-not-exists-msg: "&4Player is offline or does not exists!"
+player-has-no-homes-msg: "&4This player don't have any homes!"
+
+#Decides if prefix will be visible when you are listing homes
+enable-prefix-for-list: false
+
+#{number} - number of home in the list, {name} - name of the home, {world} - world name, {x} {y} {z} - coordinates
+list-homes-msg: "&bHome {number}. {name}"

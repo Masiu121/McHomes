@@ -1,13 +1,8 @@
 package com.oxology.mchomes;
 
-import org.bukkit.ChatColor;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class McHomes extends JavaPlugin {
-    public static final String MSG_PREFIX = ChatColor.DARK_GRAY + "[" + ChatColor.YELLOW + "Mc" + ChatColor.GOLD + "Homes" + ChatColor.DARK_GRAY + "]";
-
-    FileConfiguration config = getConfig();
 
     @Override
     public void onEnable() {
@@ -25,7 +20,6 @@ public final class McHomes extends JavaPlugin {
     }
 
     private void loadConfig() {
-        config.options().copyDefaults(true);
-        saveConfig();
+        saveDefaultConfig();
     }
 }

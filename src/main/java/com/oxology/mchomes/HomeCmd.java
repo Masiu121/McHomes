@@ -70,6 +70,38 @@ public class HomeCmd implements CommandExecutor, TabCompleter {
                 messageManager.sendMessage(4, sender);
                 return true;
             }
+            case "teleportTo" -> {
+                if(!player.hasPermission("mchomes.home.teleport.others")) {
+                    messageManager.sendMessage(6, sender);
+                    return true;
+                }
+
+                if(args.length < 2) {
+                    messageManager.sendMessage(9, sender);
+                    return true;
+                }
+
+                if(args.length < 3) {
+                    messageManager.sendMessage(0, sender);
+                    return true;
+                }
+
+                Player otherPlayer = Bukkit.getPlayer(args[1]);
+                if(otherPlayer == null) {
+                    messageManager.sendMessage(10, sender);
+                    return true;
+                }
+
+                Home home = homeManager.getHome(otherPlayer, args[2]);
+                if(home == null) {
+                    messageManager.sendMessage(3, sender);
+                    return true;
+                }
+
+                otherPlayer.teleport(home.getLocation());
+                messageManager.sendMessage(4, sender);
+                return true;
+            }
             case "remove" -> {
                 if(!player.hasPermission("mchomes.home.remove")) {
                     messageManager.sendMessage(6, sender);
@@ -90,21 +122,43 @@ public class HomeCmd implements CommandExecutor, TabCompleter {
                 messageManager.sendMessage(5, sender);
                 return true;
             }
-            case "data" -> {
-                if (args.length < 2) return false;
-                if(args[1].equalsIgnoreCase("getHomeString")) {
-                    if(args.length < 3) {
-                        sender.sendMessage(homeManager.getHomeString((Player) sender));
+            case "list" -> {
+                if(!player.hasPermission("mchomes.home.list")) {
+                    messageManager.sendMessage(6, sender);
+                    return true;
+                }
+
+                if(args.length < 2) {
+                    List<Home> homes = homeManager.getHomes(player);
+
+                    if (homes == null) {
+                        messageManager.sendMessage(8, sender);
                         return true;
                     }
 
-                    Player target = Bukkit.getPlayer(args[2]);
-                    if(target == null) {
-                        sender.sendMessage(McHomes.MSG_PREFIX + ": " + ChatColor.DARK_RED + "Player is offline does not exists!");
-                        return true;
+                    for (int i = 0; i < homes.size(); i++) {
+                        messageManager.listHomes(sender, i + 1, homes.get(i));
                     }
-                    sender.sendMessage(homeManager.getHomeString(target));
+                    return true;
                 }
+
+                Player otherPlayer = Bukkit.getPlayer(args[1]);
+                if(otherPlayer == null) {
+                    messageManager.sendMessage(10, sender);
+                    return true;
+                }
+
+                List<Home> homes = homeManager.getHomes(otherPlayer);
+
+                if (homes == null) {
+                    messageManager.sendMessage(11, sender);
+                    return true;
+                }
+
+                for (int i = 0; i < homes.size(); i++) {
+                    messageManager.listHomes(sender, i + 1, homes.get(i));
+                }
+                return true;
             }
         }
 
@@ -120,10 +174,12 @@ public class HomeCmd implements CommandExecutor, TabCompleter {
                 tab.add("set");
             if(sender.hasPermission("mchomes.home.teleport"))
                 tab.add("teleport");
+            if(sender.hasPermission("mchomes.home.teleport.others"))
+                tab.add("teleport");
             if(sender.hasPermission("mchomes.home.remove"))
                 tab.add("remove");
-            if(sender.hasPermission("mchomes.admin.data")) {
-                tab.add("data");
+            if(sender.hasPermission("mchomes.home.list")) {
+                tab.add("list");
             }
             return tab;
         }
@@ -132,24 +188,32 @@ public class HomeCmd implements CommandExecutor, TabCompleter {
             if(sender.hasPermission("mchomes.home.set") && args[0].equalsIgnoreCase("set")) return tab;
 
             if(sender.hasPermission("mchomes.home.teleport") && args[0].equalsIgnoreCase("teleport")) {
-                return homeManager.getHomeNames((Player) sender);
+                List<String> homeNames = new ArrayList<>();
+                for(Home home : homeManager.getHomes((Player) sender)) {
+                    homeNames.add(home.getName());
+                }
+
+                return homeNames;
             }
 
             if(sender.hasPermission("mchomes.home.remove") && args[0].equalsIgnoreCase("remove")) {
-                return homeManager.getHomeNames((Player) sender);
+                List<String> homeNames = new ArrayList<>();
+                for(Home home : homeManager.getHomes((Player) sender)) {
+                    homeNames.add(home.getName());
+                }
+                return homeNames;
             }
 
-            if(sender.hasPermission("mchomes.admin.data") && args[0].equalsIgnoreCase("data")) {
-                tab.add("getHomeString");
+            if(sender.hasPermission("mchomes.home.list.others") && args[0].equalsIgnoreCase("list")) {
+                return null;
+            } else if(sender.hasPermission("mchomes.home.list") && args[0].equalsIgnoreCase("list")) {
                 return tab;
             }
         }
 
         if(args.length == 3) {
-            if(args[0].equalsIgnoreCase("data")) {
-                if(args[1].equalsIgnoreCase("getHomeString")) {
-                    return null;
-                }
+            if(sender.hasPermission("mchomes.home.teleport.others") && args[0].equalsIgnoreCase("teleportTo")) {
+                return null;
             }
         }
 

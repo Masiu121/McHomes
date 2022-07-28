@@ -13,10 +13,19 @@ commands:
 permissions:
   mchomes.home.set:
     description: Allows to set home
-    default: op
+    default: true
   mchomes.home.teleport:
     description: Allows to teleport to the home
+    default: true
+  mchomes.home.teleport.others:
+    description: Allows to teleport to the other players home
     default: op
   mchomes.home.remove:
     description: Allows to remove homes
+    default: true
+  mchomes.home.list:
+    description: Allows to list homes
+    default: true
+  mchomes.home.list.others:
+    description: Allows to list other players homes
     default: op

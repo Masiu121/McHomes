@@ -111,20 +111,14 @@ public class HomeManager {
         return 0;
     }
     
-    public List<String> getHomeNames(Player player) {
-        List<String> homeNames = new ArrayList<>();
-
+    public List<Home> getHomes(Player player) {
         PersistentDataContainer playerData = player.getPersistentDataContainer();
         if(!playerData.has(homesPlayerKey, PersistentDataType.STRING)) return null;
         
         String encryptedPlayerHomes = playerData.get(homesPlayerKey, PersistentDataType.STRING);
         if(encryptedPlayerHomes == null || encryptedPlayerHomes.equals("")) return null;
-        
-        for(Home home : decrypt(encryptedPlayerHomes)) {
-            homeNames.add(home.getName());
-        }
-        
-        return homeNames;
+
+        return decrypt(encryptedPlayerHomes);
     }
 
     public Home getHome(Player player, String name) {
