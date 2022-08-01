@@ -1,6 +1,4 @@
 #----General----
-#If you don't want to deal with permissions, change this to false
-enable-permissions: true
 
 #Maximum amount of homes per player.
 #If player has mchomes.home.unlimited permission, then he can create unlimited amount of homes
@@ -23,6 +21,7 @@ no-homes-msg: "&4You don't have any homes!"
 no-player-name-msg: "&4You have to specify player name!"
 player-not-exists-msg: "&4Player is offline or does not exists!"
 player-has-no-homes-msg: "&4This player don't have any homes!"
+command-no-exists-msg: "&4This command does not exists!"
 
 #Decides if prefix will be visible when you are listing homes
 enable-prefix-for-list: false

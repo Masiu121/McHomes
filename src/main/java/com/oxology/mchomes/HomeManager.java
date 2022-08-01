@@ -75,8 +75,10 @@ public class HomeManager {
             }
         }
 
-        if(plugin.getConfig().getInt("homes-limit") <= decrypt(encryptedPlayerHomes).size()) {
-            return -2;
+        if(!player.hasPermission("mchomes.home.unlimited")) {
+            if (plugin.getConfig().getInt("homes-limit") <= decrypt(encryptedPlayerHomes).size()) {
+                return -2;
+            }
         }
 
         playerData.set(homesPlayerKey, PersistentDataType.STRING, encryptedPlayerHomes + "," + encrypt(home));

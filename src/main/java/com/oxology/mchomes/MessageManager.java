@@ -34,6 +34,7 @@ public class MessageManager {
             case 9 -> finalMessage += plugin.getConfig().getString("no-player-name-msg");
             case 10 -> finalMessage += plugin.getConfig().getString("player-not-exists-msg");
             case 11 -> finalMessage += plugin.getConfig().getString("player-has-no-homes-msg");
+            case 12 -> finalMessage += plugin.getConfig().getString("command-no-exists-msg");
         }
 
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', finalMessage));

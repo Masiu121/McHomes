@@ -1,5 +1,5 @@
 name: McHomes
-version: 1.0
+version: 1.1
 main: com.oxology.mchomes.McHomes
 api-version: 1.19
 author: Oxology
@@ -28,4 +28,7 @@ permissions:
     default: true
   mchomes.home.list.others:
     description: Allows to list other players homes
+    default: op
+  mchomes.home.unlimited:
+    description: Allows player to set unlimited amount of homes
     default: op

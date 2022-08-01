@@ -1,7 +1,6 @@
 package com.oxology.mchomes;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -160,9 +159,11 @@ public class HomeCmd implements CommandExecutor, TabCompleter {
                 }
                 return true;
             }
+            default -> {
+                messageManager.sendMessage(12, sender);
+                return true;
+            }
         }
-
-        return true;
     }
 
     @Override
@@ -175,7 +176,7 @@ public class HomeCmd implements CommandExecutor, TabCompleter {
             if(sender.hasPermission("mchomes.home.teleport"))
                 tab.add("teleport");
             if(sender.hasPermission("mchomes.home.teleport.others"))
-                tab.add("teleport");
+                tab.add("teleportTo");
             if(sender.hasPermission("mchomes.home.remove"))
                 tab.add("remove");
             if(sender.hasPermission("mchomes.home.list")) {
@@ -209,11 +210,23 @@ public class HomeCmd implements CommandExecutor, TabCompleter {
             } else if(sender.hasPermission("mchomes.home.list") && args[0].equalsIgnoreCase("list")) {
                 return tab;
             }
+
+            if(sender.hasPermission("mchomes.home.teleport.others") && args[0].equalsIgnoreCase("teleportTo")) {
+                return null;
+            }
         }
 
         if(args.length == 3) {
             if(sender.hasPermission("mchomes.home.teleport.others") && args[0].equalsIgnoreCase("teleportTo")) {
-                return null;
+                Player player = Bukkit.getPlayer(args[1]);
+                if (player == null) return tab;
+
+                List<String> homeNames = new ArrayList<>();
+                for (Home home : homeManager.getHomes(player)) {
+                    homeNames.add(home.getName());
+                }
+
+                return homeNames;
             }
         }
 
